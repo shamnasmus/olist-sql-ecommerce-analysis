@@ -1,0 +1,147 @@
+DATA QUALITY CHECKS
+- Dates are stored correctly in YYYY-MM-DD format, so delivery-time 
+  calculations will work directly.
+- 2,965 orders have no delivery date (not yet delivered/cancelled).
+- No duplicate order IDs found — data integrity is good.
+- Order status breakdown: 96,478 delivered (97%), 1,107 shipped, 
+  625 canceled, 609 unavailable, 314 invoiced, 301 processing, 
+  5 created, 2 approved.
+- Decision: filtering analysis to order_status = 'delivered' going 
+  forward, since these represent completed transactions.
+
+Q1: MONTHLY REVENUE
+Revenue grew through 2017, peaking in Nov 2017 (~R$987K), likely 
+Black Friday. 2018 stayed strong at R$800K-970K/month.
+
+Q2: TOP PRODUCT CATEGORIES BY REVENUE
+Top 3: health_beauty (R$1.23M), watches_gifts (R$1.17M), 
+bed_bath_table (R$1.02M). Notably, watches_gifts has far fewer 
+orders (5,495) than bed_bath_table (9,272) but similar revenue, 
+suggesting a much higher average price per item.
+
+Q3: REVENUE BY STATE AND CITY
+Revenue is heavily concentrated in Brazil's Southeast region. São 
+Paulo (SP) state alone generated R$5.07M (40,501 orders), about 40% 
+of total revenue, more than 3x the next state (Rio de Janeiro, 
+R$1.76M). At the city level, São Paulo city alone brought in 
+R$1.86M (15,045 orders), nearly double Rio de Janeiro city. 
+3 of the top 8 cities are within SP state itself (São Paulo, 
+Campinas, Guarulhos). The bottom 5 states combined contribute 
+under R$65K, less than 1.5% of SP's revenue alone.
+Business implication: logistics, marketing, and seller acquisition 
+efforts are likely most efficient when focused on the Southeast.
+
+Q4: PAYMENT METHOD DISTRIBUTION
+Credit card dominates: 76,795 payments (78% of total), R$12.54M in 
+value, with an average of 3.5 installments per purchase. Boleto 
+(a Brazilian bank-slip payment) is second at R$2.87M, but always 
+paid in full (1 installment). Only credit card offers installment 
+flexibility, suggesting it's a key enabler of larger purchases. 
+3 "not_defined" payments with R$0 value are a minor data quality 
+note, negligible impact.
+
+
+Q5: REPEAT CUSTOMER RATE
+Only 3% of customers (2,801 of 93,358) placed more than one order; 
+97% are one-time buyers. This points to a significant retention 
+problem — the business relies almost entirely on new customer 
+acquisition rather than repeat purchases. A loyalty program or 
+post-purchase engagement campaign could be a high-impact 
+recommendation.
+Business implication: this is likely the single biggest growth 
+opportunity for the company — improving repeat purchase rate even 
+slightly would have an outsized impact given how low it currently is.
+
+Q6: SELLER PERFORMANCE (TOP 15 BY REVENUE)
+Top 15 sellers by revenue are almost all based in SP or RJ, 
+consistent with the geographic concentration seen in Q3. Late 
+delivery rates among top sellers range from 4.6% to 14.4%, and 
+sellers with higher late-delivery rates tend to have slightly 
+lower average review scores (e.g., 14.4% late / 3.9 avg review 
+vs. 4.6% late / 4.15 avg review). This suggests delivery 
+reliability is a meaningful driver of customer satisfaction, 
+worth confirming further in Q7 (delivery time analysis).
+
+
+Q7: DELIVERY TIME VS ESTIMATE, BY STATE
+Delivery speed varies hugely by region: SP averages just 8.8 days 
+(fastest, highest volume), while remote northern states like RR 
+(29.4 days), AP (27.2 days), and AM (26.4 days) take 3x longer. 
+Notably, EVERY state delivers earlier than its estimated date — 
+Olist's delivery estimates are consistently padded (SP: -10.4 
+days early; RR: -16.6 days early). This suggests the company 
+prioritizes avoiding "late" labels over giving customers accurate, 
+tighter expectations. Business implication: delivery estimates 
+could likely be tightened, especially in SP, without risking 
+missed deadlines, which may improve perceived service speed.
+
+Q8: CATEGORIES WITH WORST REVIEW SCORES
+Lowest-rated categories (min. 30 orders): office_furniture (3.59), 
+fashion_male_clothing (3.76), fixed_telephony (3.84). Notably, 
+bed_bath_table appears here too (3.95 avg, 8,788 orders) despite 
+being a top-3 revenue category (Q2) — a high-volume category with 
+room to improve satisfaction, possibly linked to delivery/damage 
+issues. No category in the bottom 10 reaches a 4.0 average, 
+suggesting broad room for quality or expectation-setting 
+improvements across the catalog.
+
+Q9: MONTH-OVER-MONTH REVENUE GROWTH
+Early months (Sep 2016-Jan 2017) show extreme % swings (up to 
+1,025,573%) because the store had near-zero revenue at launch — 
+not a meaningful trend, just a low base effect. From Feb 2017 
+onward, growth stabilizes into realistic swings (-26% to +109%). 
+Nov 2017 shows a clear spike (+52.4%), confirming the Black Friday 
+pattern from Q1, followed by a sharp Dec 2017 drop (-26.5%), a 
+common post-holiday pullback. By 2018, month-to-month growth is 
+mostly single digits, suggesting the business reached a more 
+mature, stable revenue pattern.
+Note: Nov 2016 has zero orders (missing from results entirely) — 
+minor data gap worth flagging in the README.
+
+Q10: TOP 3 PRODUCTS PER CATEGORY (health_beauty, watches_gifts, bed_bath_table)
+Used DENSE_RANK() to find each category's top 3 products by 
+revenue. Notable: health_beauty's #1 product earns R$63,560 from 
+just 186 orders, more revenue than bed_bath_table's #1 product 
+(R$42,050 from 456 orders) despite far fewer sales — indicating a 
+high-price hero product. Identifying and protecting stock/marketing 
+for these top SKUs (9 products total across top 3 categories) could 
+meaningfully impact category-level revenue.
+
+Q11: CUSTOMER SEGMENTATION (RFM)
+Used NTILE(4) to score customers on Recency, Frequency, and 
+Monetary value, then grouped into Best (4-4-4), Worst (1-1-1), 
+and Other. Best customers (1,745 people) spend 12.6x more than 
+Worst customers (R$364.59 vs R$28.92 avg), but even Best customers 
+average just 1.35 orders — barely more than one purchase. This 
+refines the Q5 finding: the business has some high-value customers, 
+but almost none are truly loyal/repeat buyers. Recommendation: 
+target the "Best" segment (1,745 customers, big single-purchase 
+spenders) with a second-purchase incentive, since they've already 
+shown willingness to spend significantly.
+
+Q12: CUMULATIVE REVENUE AND 3-MONTH MOVING AVERAGE
+Total cumulative revenue reached R$13.22M by Aug 2018. The 3-month 
+moving average smooths out seasonal noise (like the Nov 2017 Black 
+Friday spike) and reveals a clearer underlying pattern: steady 
+growth through 2017 (from ~R$50K/mo to ~R$486K/mo), continued 
+climbing into a peak around May 2018 (~R$968K/mo), then a slight 
+plateau/decline into mid-2018 (~R$854K/mo by Aug). This suggests 
+revenue growth cooled after peaking in spring 2018, worth 
+investigating further (e.g., seller growth, marketing spend, or 
+market saturation) in a real business context.
+
+Q13: COHORT RETENTION BY FIRST-PURCHASE MONTH
+Tracked 3 sample cohorts (Jan 2017, Jun 2017, Jan 2018) from their 
+first purchase month onward. All 3 show the same stark pattern: 
+99%+ of customers never return after month 0. E.g., the Jan 2018 
+cohort had 6,842 first-time buyers, but only 23 (0.3%) purchased 
+again the following month, and numbers stay in the low double 
+digits for all subsequent months. This confirms and visually 
+proves the retention problem first identified in Q5 (3% repeat 
+rate) and Q11 (even "best" customers average 1.35 orders) — the 
+drop-off isn't gradual, it's immediate and near-total, consistent 
+across different time periods (not a one-time anomaly).
+Business implication: post-purchase engagement (email follow-up, 
+loyalty incentives, second-purchase discount) should target 
+customers within the first 30-60 days, since that's clearly the 
+critical window before near-total drop-off.

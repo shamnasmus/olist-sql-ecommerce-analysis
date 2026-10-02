@@ -1,0 +1,58 @@
+OLIST E-COMMERCE ANALYSIS — EXECUTIVE SUMMARY
+
+PROJECT OVERVIEW
+Analyzed 99,441 orders (Sep 2016 - Aug 2018) across 9 relational 
+tables using Oracle SQL, covering revenue, geography, sellers, 
+delivery performance, reviews, and customer behavior. Analysis 
+filtered to order_status = 'delivered' (96,478 orders, 97% of 
+total) to reflect completed transactions.
+
+TOP 5 FINDINGS & RECOMMENDATIONS
+
+1. CUSTOMER RETENTION IS THE BIGGEST OPPORTUNITY
+   Only 3% of customers ever place a second order (Q5), and cohort 
+   analysis (Q13) shows 99%+ drop-off immediately after the first 
+   purchase, consistent across every time period studied. Even the 
+   highest-value customer segment averages just 1.35 orders (Q11).
+   RECOMMENDATION: Launch a post-purchase engagement campaign 
+   (email follow-up, second-purchase discount) targeting the 
+   30-60 day window after first purchase, before near-total drop-off.
+
+2. REVENUE IS HEAVILY CONCENTRATED IN THE SOUTHEAST
+   São Paulo state alone generates ~40% of total revenue (Q3), and 
+   14 of the top 15 sellers by revenue are based in SP or RJ (Q6).
+   RECOMMENDATION: Prioritize logistics and marketing investment in 
+   the Southeast, while exploring targeted seller recruitment in 
+   underserved regions (bottom 5 states contribute under 1.5% of 
+   SP's revenue combined).
+
+3. DELIVERY ESTIMATES ARE OVERLY CONSERVATIVE
+   Every single state delivers earlier than its estimated date 
+   (Q7) — e.g., SP delivers 10.4 days early on average. This 
+   suggests estimates are padded rather than optimized.
+   RECOMMENDATION: Tighten delivery estimates (especially in 
+   fast-delivery regions like SP) to improve perceived service 
+   speed without risking missed deadlines.
+
+4. HIGH-REVENUE CATEGORIES DON'T ALWAYS MEAN HIGH SATISFACTION
+   bed_bath_table is a top-3 revenue category (Q2) but also appears 
+   among the lowest-rated categories (Q8, 3.95 avg score, 8,788 
+   orders).
+   RECOMMENDATION: Investigate quality, packaging, or delivery-damage 
+   issues specifically within bed_bath_table, given its high volume 
+   and revenue importance.
+
+5. CREDIT CARD INSTALLMENTS DRIVE PURCHASING POWER
+   Credit card is used in 78% of payments and is the only method 
+   customers use in installments (avg 3.5 installments) (Q4).
+   RECOMMENDATION: Ensure installment options remain prominent and 
+   frictionless at checkout, since they appear to be a key enabler 
+   of larger purchases.
+
+KEY METRICS
+- Total cumulative revenue: R$13.22M (through Aug 2018)
+- Repeat customer rate: 3%
+- Top category by revenue: health_beauty (R$1.23M)
+- Fastest delivery state: SP (8.8 days avg)
+- Slowest delivery state: RR (29.4 days avg)
+- Dominant payment method: credit card (78% of value)
