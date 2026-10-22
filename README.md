@@ -34,18 +34,23 @@ reviews, and customer retention behavior.
 
 Full write-up: [executive_summary.txt](executive_summary.txt) and [insights.txt](insights.txt)
 
+
 ### Sample Results
 
 **Repeat customer rate**
+
 ![Repeat customer rate](05_repeat_customer_rate.png)
 
 **Cohort retention**
+
 ![Cohort retention](13_cohort_retention_1.png)
 
 **Revenue by state**
+
 ![Revenue by state](03_revenue_by_state1.png)
 
 **Delivery time vs. estimate by state**
+
 ![Delivery by state](07_delivery_by_state_1.png)
 
 ## Business Questions Answered
